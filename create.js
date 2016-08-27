@@ -53,42 +53,42 @@ function create() {
     play = game.input.keyboard.addKey(Phaser.Keyboard.C);
     fast_forward = game.input.keyboard.addKey(Phaser.Keyboard.V);
 
-    function reverse () {
+    function _reverse () {
         metalface.body.velocity.y *= -1;
         monster1.body.velocity.x *= -1;
         monster2.body.velocity.x *= -1;
     }
 
-    function accelerate () {
+    function _accelerate () {
         metalface.body.velocity.y *= 10;
         monster1.body.velocity.x *= 10;
         monster2.body.velocity.x *= 10;
     }
 
-    function deccelerate () {
-        metalface.body.velocity.y *= 0.1;
-        monster1.body.velocity.x *= 0.1;
-        monster2.body.velocity.x *= 0.1;
+    function _play () {
+        metalface.body.velocity.y = 50;
+        monster1.body.velocity.x = monster1.scale.x * 50;
+        monster2.body.velocity.x = monster2.scale.x * 50;
     }
 
-    rewind.onDown.add(rev);
-    rewind.onDown.add(acc);
-
-    rewind.onUp.add(rev);
-    rewind.onUp.add(dec);
-
-    stop.onDown.add(function(){
+    function _stop () {
         metalface.body.velocity.y = 0;
         monster1.body.velocity.x = 0;
         monster2.body.velocity.x = 0;
-    });
+    }
 
-    play.onDown.add(function(){
-        metalface.body.velocity.y = 50;
-        monster1.body.velocity.x = 50;
-        monster2.body.velocity.x = 50;
-    });
+    rewind.onDown.add(_play);
+    rewind.onDown.add(_reverse);
+    rewind.onDown.add(_accelerate);
 
-    fast_forward.onDown.add(acc);
-    fast_forward.onUp.add(dec);
+    rewind.onUp.add(_stop);
+
+    stop.onDown.add(_stop);
+
+    play.onDown.add(_play);
+
+    fast_forward.onDown.add(_play);
+    fast_forward.onDown.add(_accelerate);
+
+    fast_forward.onUp.add(_stop);
 }
