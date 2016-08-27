@@ -9,6 +9,9 @@ var rewind, stop, play, fast_forward;
 function create() {
 
     player = game.add.sprite(100, 200, 'player');
+    game.physics.arcade.enable(player);
+    player.body.collideWorldBounds = true;
+    player.body.gravity.y = 1000;
 
     monsters = game.add.physicsGroup();
 
@@ -28,11 +31,6 @@ function create() {
     monster1.body.velocity.x = 50;
     monster2 = add_monster(700, 400);
     monster2.body.velocity.x = 50;
-
-    game.physics.arcade.enable(player);
-
-    player.body.collideWorldBounds = true;
-    player.body.gravity.y = 500;
 
     platforms = game.add.physicsGroup();
 
