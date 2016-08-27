@@ -65,13 +65,18 @@ function create() {
         monster2.body.velocity.x *= 10;
     }
 
+    var _dir_metalface = Math.sign(metalface.body.velocity.y);
+
     function _play () {
-        metalface.body.velocity.y = 50;
+        metalface.body.velocity.y = _dir_metalface * 50;
         monster1.body.velocity.x = monster1.scale.x * 50;
         monster2.body.velocity.x = monster2.scale.x * 50;
     }
 
     function _stop () {
+        if (metalface.body.velocity.y != 0) {
+            _dir_metalface = Math.sign(metalface.body.velocity.y);
+        }
         metalface.body.velocity.y = 0;
         monster1.body.velocity.x = 0;
         monster2.body.velocity.x = 0;
@@ -81,6 +86,7 @@ function create() {
     rewind.onDown.add(_reverse);
     rewind.onDown.add(_accelerate);
 
+    rewind.onUp.add(_reverse);
     rewind.onUp.add(_stop);
 
     stop.onDown.add(_stop);
