@@ -1,6 +1,7 @@
 var player;
 var metalface;
 var monster1, monster2;
+var monsters;
 var platforms;
 var cursors;
 var jumpButton;
@@ -8,6 +9,8 @@ var jumpButton;
 function create() {
 
     player = game.add.sprite(100, 200, 'player');
+
+    monsters = game.add.physicsGroup();
 
     function add_monster (x, y) {
         monster = game.add.sprite(x, y, 'monster');
@@ -17,6 +20,7 @@ function create() {
         game.physics.arcade.enable(monster);
         monster.body.collideWorldBounds = true;
         monster.body.gravity.y = 500;
+        monsters.add(monster);
         return monster;
     }
 

@@ -1,8 +1,7 @@
 function update () {
 
     game.physics.arcade.collide(player, platforms);
-    game.physics.arcade.collide(monster1, platforms);
-    game.physics.arcade.collide(monster2, platforms);
+    game.physics.arcade.collide(monsters, platforms);
 
     player.body.velocity.x = 0;
 
