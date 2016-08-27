@@ -52,4 +52,43 @@ function create() {
     stop = game.input.keyboard.addKey(Phaser.Keyboard.X);
     play = game.input.keyboard.addKey(Phaser.Keyboard.C);
     fast_forward = game.input.keyboard.addKey(Phaser.Keyboard.V);
+
+    function reverse () {
+        metalface.body.velocity.y *= -1;
+        monster1.body.velocity.x *= -1;
+        monster2.body.velocity.x *= -1;
+    }
+
+    function accelerate () {
+        metalface.body.velocity.y *= 10;
+        monster1.body.velocity.x *= 10;
+        monster2.body.velocity.x *= 10;
+    }
+
+    function deccelerate () {
+        metalface.body.velocity.y *= 0.1;
+        monster1.body.velocity.x *= 0.1;
+        monster2.body.velocity.x *= 0.1;
+    }
+
+    rewind.onDown.add(rev);
+    rewind.onDown.add(acc);
+
+    rewind.onUp.add(rev);
+    rewind.onUp.add(dec);
+
+    stop.onDown.add(function(){
+        metalface.body.velocity.y = 0;
+        monster1.body.velocity.x = 0;
+        monster2.body.velocity.x = 0;
+    });
+
+    play.onDown.add(function(){
+        metalface.body.velocity.y = 50;
+        monster1.body.velocity.x = 50;
+        monster2.body.velocity.x = 50;
+    });
+
+    fast_forward.onDown.add(acc);
+    fast_forward.onUp.add(dec);
 }
