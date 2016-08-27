@@ -4,7 +4,7 @@ var monster1, monster2;
 var monsters;
 var platforms;
 var cursors;
-var jumpButton;
+var rewind, stop, play, fast_forward;
 
 function create() {
 
@@ -50,6 +50,8 @@ function create() {
     metalface.body.velocity.y = 50;
 
     cursors = game.input.keyboard.createCursorKeys();
-    jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-
+    rewind = game.input.keyboard.addKey(Phaser.Keyboard.Z);
+    stop = game.input.keyboard.addKey(Phaser.Keyboard.X);
+    play = game.input.keyboard.addKey(Phaser.Keyboard.C);
+    fast_forward = game.input.keyboard.addKey(Phaser.Keyboard.V);
 }
