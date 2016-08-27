@@ -31,7 +31,7 @@ function update () {
     }
 
     if (monster2.left < 500 && monster2.body.velocity.x < 0
-        || monster2.right > 750 && monster2.body.velocity.x > 0) {
+        || monster2.right > 700 && monster2.body.velocity.x > 0) {
         monster2.body.velocity.x *= -1;
         monster2.scale.x *= -1;
     }
