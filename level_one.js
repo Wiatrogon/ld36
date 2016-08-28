@@ -35,15 +35,16 @@ var level_one = {
             monster.animations.play('walk', 15, true);
             game.physics.arcade.enable(monster);
             monster.body.collideWorldBounds = true;
+            monster.body.velocity.x = 50;
             monster.body.gravity.y = 500;
             monsters.add(monster);
+
             return monster;
+
         }
 
         monster1 = add_monster(700, 100);
-        monster1.body.velocity.x = 50;
         monster2 = add_monster(700, 400);
-        monster2.body.velocity.x = 50;
 
         platforms = game.add.physicsGroup();
 
