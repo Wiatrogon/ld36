@@ -118,10 +118,12 @@ var level_one = {
         }
 
         function _play_music () {
-            var _marker = marker / 1000;
-            music.addMarker('resume', _marker, music.duration - _marker);
-            music.stop();
-            music.play('resume');
+            if (!music.isPlaying) {
+                var _marker = marker / 1000;
+                music.addMarker('resume', _marker, music.duration - _marker);
+                music.stop();
+                music.play('resume');
+            }
         }
 
         rewind.onDown.add(_pause_music);
