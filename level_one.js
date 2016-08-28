@@ -9,9 +9,6 @@ var level_one = {
 
         game.stage.backgroundColor = '#85b5e1';
 
-        game.load.baseURL = 'http://examples.phaser.io/assets/';
-        game.load.crossOrigin = 'anonymous';
-
         game.load.image('player', 'sprites/phaser-dude.png');
         game.load.image('platform', 'sprites/platform.png');
 
@@ -29,10 +26,13 @@ var level_one = {
         monsters = game.add.physicsGroup();
 
         function add_monster (x, y) {
+
             monster = game.add.sprite(x, y, 'monster');
             monster.anchor.setTo(.5, 1);
+
             monster.animations.add('walk');
             monster.animations.play('walk', 15, true);
+
             game.physics.arcade.enable(monster);
             monster.body.collideWorldBounds = true;
             monster.body.velocity.x = 50;
@@ -60,12 +60,6 @@ var level_one = {
         platforms.setAll('body.immovable', true);
 
         metalface.body.velocity.y = 50;
-
-        cursors = game.input.keyboard.createCursorKeys();
-        rewind = game.input.keyboard.addKey(Phaser.Keyboard.Z);
-        stop = game.input.keyboard.addKey(Phaser.Keyboard.X);
-        play = game.input.keyboard.addKey(Phaser.Keyboard.C);
-        fast_forward = game.input.keyboard.addKey(Phaser.Keyboard.V);
 
         function _reverse () {
             metalface.body.velocity.y *= -1;
