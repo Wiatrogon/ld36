@@ -1,7 +1,5 @@
 var player;
 var metalface;
-var monster1, monster2;
-var monsters;
 var platforms;
 var exit;
 
@@ -11,7 +9,7 @@ var position;
 
 var marker;
 
-var level_one = {
+var level_two = {
     preload: function () {
 
         game.stage.backgroundColor = '#182d3b';
@@ -19,7 +17,6 @@ var level_one = {
         game.load.image('player', 'sprites/phaser-dude.png');
         game.load.image('platform', 'sprites/platform.png');
 
-        game.load.spritesheet('monster', 'sprites/metalslug_monster39x40.png', 39, 40);
         game.load.spritesheet('metalface', 'sprites/metalface78x92.png', 78, 92);
 
         game.load.image('exit', 'sprites/orb-blue.png');
@@ -38,39 +35,15 @@ var level_one = {
         music.play();
         marker = 0;
 
-        player = game.add.sprite(100, 200, 'player');
+        player = game.add.sprite(100, 300, 'player');
         game.physics.arcade.enable(player);
         player.body.collideWorldBounds = true;
         player.body.gravity.y = 1000;
 
-        monsters = game.add.physicsGroup();
-
-        function add_monster (x, y) {
-
-            monster = game.add.sprite(x, y, 'monster');
-            monster.anchor.setTo(.5, 1);
-
-            monster.animations.add('walk');
-            monster.animations.play('walk', 15, true);
-
-            game.physics.arcade.enable(monster);
-            monster.body.collideWorldBounds = true;
-            monster.body.velocity.x = 50;
-            monster.body.gravity.y = 500;
-            monsters.add(monster);
-
-            return monster;
-
-        }
-
-        monster1 = add_monster(700, 100);
-        monster2 = add_monster(700, 400);
-
         platforms = game.add.physicsGroup();
 
-        platforms.create(500, 150, 'platform');
-        platforms.create(-200, 300, 'platform');
-        platforms.create(400, 450, 'platform');
+        platforms.create(-200, 400, 'platform');
+        platforms.create(400, 200, 'platform');
 
         metalface = game.add.sprite(310, 100, 'metalface');
         blink = metalface.animations.add('blink');
@@ -79,26 +52,20 @@ var level_one = {
 
         platforms.setAll('body.immovable', true);
 
-        metalface.body.velocity.y = 50;
+        metalface.body.velocity.y = 5;
 
         function _reverse () {
             metalface.body.velocity.y *= -1;
-            monster1.body.velocity.x *= -1;
-            monster2.body.velocity.x *= -1;
         }
 
         function _accelerate () {
             metalface.body.velocity.y *= 10;
-            monster1.body.velocity.x *= 10;
-            monster2.body.velocity.x *= 10;
         }
 
         var _dir_metalface = Math.sign(metalface.body.velocity.y);
 
         function _play () {
-            metalface.body.velocity.y = _dir_metalface * 50;
-            monster1.body.velocity.x = monster1.scale.x * 50;
-            monster2.body.velocity.x = monster2.scale.x * 50;
+            metalface.body.velocity.y = _dir_metalface * 5;
         }
 
         function _stop () {
@@ -106,8 +73,6 @@ var level_one = {
                 _dir_metalface = Math.sign(metalface.body.velocity.y);
             }
             metalface.body.velocity.y = 0;
-            monster1.body.velocity.x = 0;
-            monster2.body.velocity.x = 0;
         }
 
         function _pause_music () {
@@ -144,7 +109,7 @@ var level_one = {
 
         fast_forward.onUp.add(_stop);
 
-        exit = game.add.sprite(700, 550, 'exit');
+        exit = game.add.sprite(700, 150, 'exit');
         game.physics.arcade.enable(exit);
         exit.body.immovable = true;
     },
@@ -157,7 +122,6 @@ var level_one = {
         }
 
         game.physics.arcade.collide(player, platforms);
-        game.physics.arcade.collide(monsters, platforms);
         game.physics.arcade.collide(player, exit, next_level);
 
         player.body.velocity.x = 0;
@@ -179,18 +143,6 @@ var level_one = {
         if (metalface.bottom > 500 && metalface.body.velocity.y > 0
             || metalface.top < 100 && metalface.body.velocity.y < 0) {
             metalface.body.velocity.y *= -1;
-        }
-
-        if (monster1.left < 600 && monster1.body.velocity.x < 0
-            || monster1.right > 700 && monster1.body.velocity.x > 0) {
-            monster1.body.velocity.x *= -1;
-            monster1.scale.x *= -1;
-        }
-
-        if (monster2.left < 500 && monster2.body.velocity.x < 0
-            || monster2.right > 700 && monster2.body.velocity.x > 0) {
-            monster2.body.velocity.x *= -1;
-            monster2.scale.x *= -1;
         }
 
         if (rewind.isDown) {
