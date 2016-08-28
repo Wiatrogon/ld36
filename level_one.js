@@ -114,9 +114,13 @@ var level_one = {
     },
     update: function () {
 
+        function next_level () {
+            game.state.start('level_two');
+        }
+
         game.physics.arcade.collide(player, platforms);
         game.physics.arcade.collide(monsters, platforms);
-        game.physics.arcade.collide(player, exit);
+        game.physics.arcade.collide(player, exit, next_level);
 
         player.body.velocity.x = 0;
 

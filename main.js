@@ -7,6 +7,7 @@ function main() {
 
     game.state.add('loading', loading);
     game.state.add('level_one', level_one);
+    game.state.add('level_two', level_one);
 
     game.state.start('loading');
 }
