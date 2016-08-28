@@ -5,6 +5,12 @@ var monsters;
 var platforms;
 var exit;
 
+var music;
+var time;
+var position;
+
+var marker;
+
 var level_one = {
     preload: function () {
 
@@ -17,8 +23,20 @@ var level_one = {
         game.load.spritesheet('metalface', 'sprites/metalface78x92.png', 78, 92);
 
         game.load.image('exit', 'sprites/orb-blue.png');
+
+        game.load.audio('music', 'audio/bodenstaendig_2000_in_rock_4bit.mp3');
     },
     create: function () {
+
+        time = game.add.text(0, 0, 'foo');
+        position = game.add.text(0, 20, 'bar');
+
+        if (typeof music === 'undefined' || music === null) {
+            music = game.add.audio('music');
+        }
+
+        music.play();
+        marker = 0;
 
         player = game.add.sprite(100, 200, 'player');
         game.physics.arcade.enable(player);
@@ -92,6 +110,21 @@ var level_one = {
             monster2.body.velocity.x = 0;
         }
 
+        function _pause_music () {
+            if (music.isPlaying) {
+                music.pause();
+                marker += music.currentTime;
+            }
+        }
+
+        function _play_music () {
+            var _marker = marker / 1000;
+            music.addMarker('resume', _marker, music.duration - _marker);
+            music.stop();
+            music.play('resume');
+        }
+
+        rewind.onDown.add(_pause_music);
         rewind.onDown.add(_play);
         rewind.onDown.add(_reverse);
         rewind.onDown.add(_accelerate);
@@ -100,9 +133,12 @@ var level_one = {
         rewind.onUp.add(_stop);
 
         stop.onDown.add(_stop);
+        stop.onDown.add(_pause_music);
 
         play.onDown.add(_play);
+        play.onDown.add(_play_music);
 
+        fast_forward.onDown.add(_pause_music);
         fast_forward.onDown.add(_play);
         fast_forward.onDown.add(_accelerate);
 
@@ -113,6 +149,8 @@ var level_one = {
         exit.body.immovable = true;
     },
     update: function () {
+        time.text = game.time.now;
+        position.text = marker;
 
         function next_level () {
             game.state.start('level_two');
@@ -153,6 +191,15 @@ var level_one = {
             || monster2.right > 700 && monster2.body.velocity.x > 0) {
             monster2.body.velocity.x *= -1;
             monster2.scale.x *= -1;
+        }
+
+        if (rewind.isDown) {
+            marker -= 2*game.time.physicsElapsedMS;
+            marker = Math.max(marker, 0);
+        }
+
+        if (fast_forward.isDown) {
+            marker += 2*game.time.physicsElapsedMS;
         }
     }
 };
