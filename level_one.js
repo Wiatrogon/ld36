@@ -3,6 +3,7 @@ var metalface;
 var monster1, monster2;
 var monsters;
 var platforms;
+var exit;
 
 var level_one = {
     preload: function () {
@@ -15,6 +16,7 @@ var level_one = {
         game.load.spritesheet('monster', 'sprites/metalslug_monster39x40.png', 39, 40);
         game.load.spritesheet('metalface', 'sprites/metalface78x92.png', 78, 92);
 
+        game.load.image('exit', 'sprites/orb-blue.png');
     },
     create: function () {
 
@@ -105,11 +107,16 @@ var level_one = {
         fast_forward.onDown.add(_accelerate);
 
         fast_forward.onUp.add(_stop);
+
+        exit = game.add.sprite(700, 550, 'exit');
+        game.physics.arcade.enable(exit);
+        exit.body.immovable = true;
     },
     update: function () {
 
         game.physics.arcade.collide(player, platforms);
         game.physics.arcade.collide(monsters, platforms);
+        game.physics.arcade.collide(player, exit);
 
         player.body.velocity.x = 0;
 
