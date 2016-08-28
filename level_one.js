@@ -200,6 +200,7 @@ var level_one = {
 
         if (fast_forward.isDown) {
             marker += 2*game.time.physicsElapsedMS;
+            marker = Math.min(marker, music.durationMS);
         }
     }
 };

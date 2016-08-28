@@ -1,7 +1,7 @@
 var loading = {
     preload: function () {
 
-        game.load.baseURL = 'https://examples.phaser.io/assets/';
+        game.load.baseURL = 'http://examples.phaser.io/assets/';
         game.load.crossOrigin = 'anonymous';
 
         cursors = game.input.keyboard.createCursorKeys();
