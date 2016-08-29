@@ -18,12 +18,15 @@ var level_two = {
         time = game.add.text(0, 0, 'foo');
         position = game.add.text(0, 20, 'bar');
 
-        if (typeof music === 'undefined' || music === null) {
-            music = game.add.audio('star_song');
-        }
+        music.stop();
+        music = game.add.audio('star_song');
 
         music.play();
         marker = 0;
+
+        sfx_play = game.add.audio('sfx_play');
+        sfx_stop = game.add.audio('sfx_stop');
+        sfx_ff = game.add.audio('sfx_ff');
 
         player = game.add.sprite(100, 300, 'player');
         player.anchor.setTo(.5, -1);
@@ -50,6 +53,8 @@ var level_two = {
         }
 
         function _accelerate () {
+            sfx_ff.play();
+            sfx_ff.loopFull();
             metalface.body.velocity.y *= 10;
         }
 
@@ -60,6 +65,9 @@ var level_two = {
         }
 
         function _stop () {
+            if (sfx_ff.isPlaying) {
+                sfx_ff.stop();
+            }
             if (metalface.body.velocity.y != 0) {
                 _dir_metalface = Math.sign(metalface.body.velocity.y);
             }
@@ -70,14 +78,20 @@ var level_two = {
             if (music.isPlaying) {
                 music.pause();
                 marker += music.currentTime;
+                sfx_stop.play();
             }
         }
 
         function _play_music () {
-            var _marker = marker / 1000;
-            music.addMarker('resume', _marker, music.duration - _marker);
-            music.stop();
-            music.play('resume');
+            if (!music.isPlaying) {
+                sfx_play.play();
+                setTimeout(function(){
+                    var _marker = marker / 1000;
+                    music.addMarker('resume', _marker, music.duration - _marker);
+                    music.stop();
+                    music.play('resume');
+                }, sfx_play.durationMS);
+            }
         }
 
         rewind.onDown.add(_pause_music);
