@@ -20,6 +20,10 @@ var loading = {
     create: function() {
 
         var labels = [
+            'you came into possession of a piece of ancient technology',
+            'known as portable audio cassette player',
+            'which gives you the power to control time',
+            '',
             'use arrow keys to move',
             'hold z to rewind',
             'press x to stop',
@@ -27,6 +31,7 @@ var loading = {
             'hold v to fast forward',
             '',
             'music is composed by Lee Rosevere',
+            '(http://freemusicarchive.org/music/Lee_Rosevere/)',
             'and is used under permise of creative commons license',
             'https://creativecommons.org/licenses/by-nc/4.0/'
         ];
