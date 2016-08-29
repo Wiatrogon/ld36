@@ -11,17 +11,7 @@ var marker;
 
 var level_two = {
     preload: function () {
-
         game.stage.backgroundColor = '#182d3b';
-
-        game.load.image('player', 'sprites/phaser-dude.png');
-        game.load.image('platform', 'sprites/platform.png');
-
-        game.load.spritesheet('metalface', 'sprites/metalface78x92.png', 78, 92);
-
-        game.load.image('exit', 'sprites/orb-blue.png');
-
-        game.load.audio('music', 'audio/bodenstaendig_2000_in_rock_4bit.mp3');
     },
     create: function () {
 
@@ -29,13 +19,14 @@ var level_two = {
         position = game.add.text(0, 20, 'bar');
 
         if (typeof music === 'undefined' || music === null) {
-            music = game.add.audio('music');
+            music = game.add.audio('star_song');
         }
 
         music.play();
         marker = 0;
 
         player = game.add.sprite(100, 300, 'player');
+        player.anchor.setTo(.5, -1);
         game.physics.arcade.enable(player);
         player.body.collideWorldBounds = true;
         player.body.gravity.y = 1000;
@@ -109,7 +100,7 @@ var level_two = {
 
         fast_forward.onUp.add(_stop);
 
-        exit = game.add.sprite(700, 150, 'exit');
+        exit = game.add.sprite(700, 168, 'exit');
         game.physics.arcade.enable(exit);
         exit.body.immovable = true;
     },
@@ -119,6 +110,11 @@ var level_two = {
 
         function next_level () {
             game.state.start('level_two');
+        }
+
+        if (Math.sign(player.body.velocity.x) * player.scale.x < 0)
+        {
+            player.scale.x = Math.sign(player.body.velocity.x);
         }
 
         game.physics.arcade.collide(player, platforms);

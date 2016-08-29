@@ -11,3 +11,4 @@ function main() {
 
     game.state.start('loading');
 }
+

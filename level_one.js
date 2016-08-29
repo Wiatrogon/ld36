@@ -13,18 +13,8 @@ var marker;
 
 var level_one = {
     preload: function () {
-
         game.stage.backgroundColor = '#182d3b';
-
-        game.load.image('player', 'sprites/phaser-dude.png');
-        game.load.image('platform', 'sprites/platform.png');
-
-        game.load.spritesheet('monster', 'sprites/metalslug_monster39x40.png', 39, 40);
-        game.load.spritesheet('metalface', 'sprites/metalface78x92.png', 78, 92);
-
-        game.load.image('exit', 'sprites/orb-blue.png');
-
-        game.load.audio('music', 'audio/bodenstaendig_2000_in_rock_4bit.mp3');
+        
     },
     create: function () {
 
@@ -32,13 +22,14 @@ var level_one = {
         position = game.add.text(0, 20, 'bar');
 
         if (typeof music === 'undefined' || music === null) {
-            music = game.add.audio('music');
+            music = game.add.audio('neon_skies');
         }
 
         music.play();
         marker = 0;
 
         player = game.add.sprite(100, 200, 'player');
+        player.anchor.setTo(.5, -1);
         game.physics.arcade.enable(player);
         player.body.collideWorldBounds = true;
         player.body.gravity.y = 1000;
@@ -49,10 +40,6 @@ var level_one = {
 
             monster = game.add.sprite(x, y, 'monster');
             monster.anchor.setTo(.5, 1);
-
-            monster.animations.add('walk');
-            monster.animations.play('walk', 15, true);
-
             game.physics.arcade.enable(monster);
             monster.body.collideWorldBounds = true;
             monster.body.velocity.x = 50;
@@ -146,7 +133,7 @@ var level_one = {
 
         fast_forward.onUp.add(_stop);
 
-        exit = game.add.sprite(700, 550, 'exit');
+        exit = game.add.sprite(700, 567, 'exit');
         game.physics.arcade.enable(exit);
         exit.body.immovable = true;
     },
@@ -178,6 +165,11 @@ var level_one = {
             player.body.velocity.y = -400;
         }
 
+        if (Math.sign(player.body.velocity.x) * player.scale.x < 0)
+        {
+            player.scale.x = Math.sign(player.body.velocity.x);
+        }
+
         if (metalface.bottom > 500 && metalface.body.velocity.y > 0
             || metalface.top < 100 && metalface.body.velocity.y < 0) {
             metalface.body.velocity.y *= -1;
@@ -204,5 +196,8 @@ var level_one = {
             marker += 2*game.time.physicsElapsedMS;
             marker = Math.min(marker, music.durationMS);
         }
+    },
+    shutdown: function() {
+        music.stop();
     }
 };

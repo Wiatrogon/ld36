@@ -1,8 +1,14 @@
 var loading = {
-    preload: function () {
+    preload: function(){
 
-        game.load.baseURL = 'http://examples.phaser.io/assets/';
-        game.load.crossOrigin = 'anonymous';
+        game.load.image('player', 'sprites/player.png');
+        game.load.image('platform', 'sprites/platform.png');
+        game.load.image('monster', 'sprites/monster.png');
+        game.load.spritesheet('metalface', 'sprites/metalface78x92.png', 78, 92);
+        game.load.image('exit', 'sprites/exit.png');
+
+        game.load.audio('neon_skies', 'music/Lee_Rosevere_-_02_-_Neon_Skies.mp3');
+        game.load.audio('star_song', 'music/Lee_Rosevere_-_05_-_Star_Song.mp3');
 
         cursors = game.input.keyboard.createCursorKeys();
         rewind = game.input.keyboard.addKey(Phaser.Keyboard.Z);
@@ -18,7 +24,11 @@ var loading = {
             'hold z to rewind',
             'press x to stop',
             'press c to play',
-            'hold v to fast forward'
+            'hold v to fast forward',
+            '',
+            'music is composed by Lee Rosevere',
+            'and is used under permise of creative commons license',
+            'https://creativecommons.org/licenses/by-nc/4.0/'
         ];
 
         var label_config = {
