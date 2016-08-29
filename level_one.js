@@ -28,6 +28,10 @@ var level_one = {
         music.play();
         marker = 0;
 
+        sfx_play = game.add.audio('sfx_play');
+        sfx_stop = game.add.audio('sfx_stop');
+        sfx_rew = sfx_ff = game.add.audio('sfx_rew_ff');
+
         player = game.add.sprite(100, 200, 'player');
         player.anchor.setTo(.5, -1);
         game.physics.arcade.enable(player);
@@ -99,6 +103,7 @@ var level_one = {
 
         function _pause_music () {
             if (music.isPlaying) {
+                sfx_stop.play();
                 music.pause();
                 marker += music.currentTime;
             }
@@ -106,6 +111,7 @@ var level_one = {
 
         function _play_music () {
             if (!music.isPlaying) {
+                sfx_play.play();
                 var _marker = marker / 1000;
                 music.addMarker('resume', _marker, music.duration - _marker);
                 music.stop();

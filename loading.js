@@ -10,6 +10,10 @@ var loading = {
         game.load.audio('neon_skies', 'music/Lee_Rosevere_-_02_-_Neon_Skies.mp3');
         game.load.audio('star_song', 'music/Lee_Rosevere_-_05_-_Star_Song.mp3');
 
+        game.load.audio('sfx_play', 'sfx/play_button.mp3');
+        game.load.audio('sfx_stop', 'sfx/stop_button.mp3');
+        game.load.audio('sfx_rew_ff', 'sfx/rew_ff.mp3');
+
         cursors = game.input.keyboard.createCursorKeys();
         rewind = game.input.keyboard.addKey(Phaser.Keyboard.Z);
         stop = game.input.keyboard.addKey(Phaser.Keyboard.X);
