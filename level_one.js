@@ -30,6 +30,7 @@ var level_one = {
 
         sfx_play = game.add.audio('sfx_play');
         sfx_stop = game.add.audio('sfx_stop');
+        sfx_ff = game.add.audio('sfx_ff');
 
         player = game.add.sprite(100, 200, 'player');
         player.anchor.setTo(.5, -1);
@@ -78,6 +79,8 @@ var level_one = {
         }
 
         function _accelerate () {
+            sfx_ff.play();
+            sfx_ff.loopFull();
             metalface.body.velocity.y *= 10;
             monster1.body.velocity.x *= 10;
             monster2.body.velocity.x *= 10;
@@ -92,6 +95,9 @@ var level_one = {
         }
 
         function _stop () {
+            if (sfx_ff.isPlaying) {
+                sfx_ff.stop();
+            }
             if (metalface.body.velocity.y != 0) {
                 _dir_metalface = Math.sign(metalface.body.velocity.y);
             }
@@ -102,9 +108,9 @@ var level_one = {
 
         function _pause_music () {
             if (music.isPlaying) {
-                sfx_stop.play();
                 music.pause();
                 marker += music.currentTime;
+                sfx_stop.play();
             }
         }
 

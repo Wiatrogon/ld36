@@ -12,6 +12,7 @@ var loading = {
 
         game.load.audio('sfx_play', 'sfx/play_button.mp3');
         game.load.audio('sfx_stop', 'sfx/stop_button.mp3');
+        game.load.audio('sfx_ff', 'sfx/rew_ff.mp3');
 
         cursors = game.input.keyboard.createCursorKeys();
         rewind = game.input.keyboard.addKey(Phaser.Keyboard.Z);
